@@ -24,6 +24,13 @@ export default function Home({ clearSearch, setClearSearch }) {
   const [filters, setFilters] = useState({});
 
   useEffect(() => {
+    const last = localStorage.getItem("lastSearch");
+    if (last) {
+      handleSearch(last, 1);
+    }
+  }, []);
+
+  useEffect(() => {
     if (clearSearch) {
       setMovies([]);
       setSearchTerm("");
@@ -98,7 +105,6 @@ export default function Home({ clearSearch, setClearSearch }) {
       </Box>
 
       <SearchBar onSearch={(query) => handleSearch(query, 1)} />
-
       <FilterBar filters={filters} setFilters={setFilters} />
 
       {error && (

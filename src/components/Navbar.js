@@ -11,11 +11,15 @@ import {
 } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
 import MovieIcon from "@mui/icons-material/Movie";
+import { useThemeMode } from "../context/ThemeContext";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 
 export default function Navbar({ onLogout, onHomeClick }) {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { toggleTheme, mode } = useThemeMode();
 
   const handleHomeClick = () => {
     onHomeClick();         
@@ -29,14 +33,19 @@ export default function Navbar({ onLogout, onHomeClick }) {
   };
 
   return (
-    <AppBar position="sticky" sx={{ backgroundColor: "#141414" }}>
+<AppBar position="sticky" sx={{ backgroundColor: "#000", color: "#fff" }}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
     
         <Box display="flex" alignItems="center" sx={{ cursor: "pointer" }} onClick={handleHomeClick}>
           <MovieIcon sx={{ mr: 1, color: "red" }} />
-          <Typography variant="h6" fontWeight="bold" color="white">
-            Movie Explorer
-          </Typography>
+          <Typography
+  variant="h6"
+  fontWeight="bold"
+  sx={{ color: "inherit" }}
+>
+  Movie Explorer
+</Typography>
+
         </Box>
 
         <Box display="flex" alignItems="center" gap={2}>
@@ -62,6 +71,11 @@ export default function Navbar({ onLogout, onHomeClick }) {
           >
             Logout
           </Button>
+
+  
+          <IconButton onClick={toggleTheme} color="inherit">
+            {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>
         </Box>
       </Toolbar>
     </AppBar>
