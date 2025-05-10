@@ -1,36 +1,55 @@
 import React, { useEffect, useState } from "react";
 import { getTrendingMovies } from "../api/tmdb";
+import { Box, Typography, CircularProgress } from "@mui/material";
 import MovieCard from "./MovieCard";
+import WhatshotIcon from "@mui/icons-material/Whatshot";
 
 export default function TrendingMovies() {
-  const [trending, setTrending] = useState([]);
+  const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchTrending = async () => {
+    const fetch = async () => {
       try {
         const res = await getTrendingMovies();
-        setTrending(res.data.results);
+        setMovies(res.data.results);
       } catch (err) {
         console.error("Failed to fetch trending movies", err);
-      } finally {
-        setLoading(false);
       }
+      setLoading(false);
     };
-
-    fetchTrending();
+    fetch();
   }, []);
 
-  if (loading) return <p>Loading trending movies...</p>;
+  if (loading) {
+    return (
+      <Box textAlign="center" mt={4}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
-    <div style={{ marginTop: "2rem" }}>
-      <h2>🔥 Trending This Week</h2>
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {trending.map(movie => (
+    <Box mt={5}>
+      <Box display="flex" alignItems="center" mb={2} gap={1}>
+        <WhatshotIcon color="error" />
+        <Typography variant="h5" fontWeight="bold">
+          Trending This Week
+        </Typography>
+      </Box>
+
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+          gap: 3,
+          justifyContent: "center",
+        }}
+      >
+        {movies.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }

@@ -1,4 +1,12 @@
 import React, { useState } from "react";
+import {
+  Box,
+  Button,
+  Container,
+  TextField,
+  Typography,
+  Paper,
+} from "@mui/material";
 
 export default function Login({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -6,62 +14,71 @@ export default function Login({ onLogin }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (username && password) {
-      onLogin(username); // Just mock login
+    if (username.trim() && password.trim()) {
+      onLogin(username.trim());
     }
   };
 
   return (
-    <div style={{
-      display: "flex",
-      height: "100vh",
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "#f0f2f5"
-    }}>
-      <form onSubmit={handleSubmit} style={{
-        padding: "2rem",
-        background: "#fff",
-        borderRadius: "8px",
-        boxShadow: "0 0 10px rgba(0,0,0,0.1)"
-      }}>
-        <h2 style={{ textAlign: "center" }}>Login</h2>
-        <div style={{ marginBottom: "1rem" }}>
-          <input
-            type="text"
-            placeholder="Username"
-            onChange={(e) => setUsername(e.target.value)}
-            style={{
-              width: "100%",
-              padding: "0.5rem",
-              marginBottom: "0.5rem"
-            }}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-            style={{
-              width: "100%",
-              padding: "0.5rem"
-            }}
-          />
-        </div>
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "0.5rem",
-            backgroundColor: "#007bff",
-            color: "#fff",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer"
-          }}
-        >
-          Login
-        </button>
-      </form>
-    </div>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "linear-gradient(135deg, #1e3c72, #2a5298)",
+        p: 2,
+      }}
+    >
+      <Container maxWidth="xs">
+        <Paper elevation={6} sx={{ p: 4, borderRadius: 3 }}>
+          <Typography
+            variant="h4"
+            align="center"
+            gutterBottom
+            sx={{ fontWeight: "bold" }}
+          >
+            🎬 Movie Explorer
+          </Typography>
+
+          <Typography
+            variant="subtitle1"
+            align="center"
+            color="text.secondary"
+            mb={3}
+          >
+            Discover trending movies and save your favorites!
+          </Typography>
+
+          <form onSubmit={handleSubmit}>
+            <TextField
+              label="Username"
+              fullWidth
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              sx={{ mb: 2 }}
+              required
+            />
+            <TextField
+              label="Password"
+              type="password"
+              fullWidth
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              sx={{ mb: 3 }}
+              required
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              fullWidth
+              sx={{ py: 1.5 }}
+            >
+              🚀 Enter
+            </Button>
+          </form>
+        </Paper>
+      </Container>
+    </Box>
   );
 }
