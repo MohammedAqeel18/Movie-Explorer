@@ -43,7 +43,7 @@ export default function Navbar({ onLogout, onHomeClick }) {
   fontWeight="bold"
   sx={{ color: "inherit" }}
 >
-  Movie Explorer
+  Movies Explorer
 </Typography>
 
         </Box>
